@@ -5,8 +5,8 @@ namespace WFA_POE
     public partial class GameForm : Form
     {
         private GameEngine engine;
-        private DataSet? dataSet = new DataSet();
-        private DataTable? dataTable = new DataTable();
+        private DataSet dataSet = new DataSet();
+        private DataTable dataTable = new DataTable();
 
 
         public GameForm()
