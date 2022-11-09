@@ -216,6 +216,7 @@
             this.saveBtn.TabIndex = 6;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = false;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
             // loadBtn
             // 
@@ -226,6 +227,7 @@
             this.loadBtn.TabIndex = 7;
             this.loadBtn.Text = "Load from save";
             this.loadBtn.UseVisualStyleBackColor = false;
+            this.loadBtn.Click += new System.EventHandler(this.loadBtn_Click);
             // 
             // GameForm
             // 
