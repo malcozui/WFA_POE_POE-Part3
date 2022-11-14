@@ -32,6 +32,18 @@ namespace WFA_POE
         {
             dataTable.Rows.Add("Hero", engine.GameMap.GameHero.X, engine.GameMap.GameHero.Y, engine.GameMap.GameHero.Hp, engine.GameMap.GameHero.MaxHp, engine.GameMap.GameHero.GoldAmount);
 
+            for (int i = 0; i < engine.GameMap.GameEnemies.Length; i++)
+            {
+                switch (engine.GameMap.GameEnemies[i])
+                {
+                    case SwampCreature:
+                        dataTable.Rows.Add("Swamp Creature", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
+                        break;
+                    case Mage:
+                        dataTable.Rows.Add("Mage", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
+                        break;
+                }
+            }
             dataSet.WriteXml("SavedData.xml");
         }
         private void loadBtn_Click(object sender, EventArgs e)
