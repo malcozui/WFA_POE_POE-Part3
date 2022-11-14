@@ -371,3 +371,13 @@ FodyWeavers.xsd
 /WFA_POE/obj/project.nuget.cache
 /WFA_POE/obj/WFA_POE.csproj.nuget.dgspec.json
 /WFA_POE/obj/WFA_POE.csproj.nuget.g.props
+/WFA_POE/bin/Debug/net6.0-windows/WFA_POE.dll
+/WFA_POE/bin/Debug/net6.0-windows/WFA_POE.pdb
+/WFA_POE/bin/Debug/net6.0-windows/WFA_POE.exe
+/WFA_POE/obj/Debug/net6.0-windows/ref/WFA_POE.dll
+/WFA_POE/obj/Debug/net6.0-windows/apphost.exe
+/WFA_POE/obj/Debug/net6.0-windows/refint/WFA_POE.dll
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.csproj.CoreCompileInputs.cache
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.csproj.GenerateResource.cache
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.pdb
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.dll
