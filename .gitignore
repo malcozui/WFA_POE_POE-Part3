@@ -367,3 +367,7 @@ FodyWeavers.xsd
 /WFA_POE/obj/Release/net6.0-windows/WFA_POE.assets.cache
 /WFA_POE/obj/Release/net6.0-windows/WFA_POE.csproj.AssemblyReference.cache
 /WFA_POE/obj/Release/net6.0-windows/WFA_POE.GeneratedMSBuildEditorConfig.editorconfig
+/WFA_POE/obj/project.assets.json
+/WFA_POE/obj/project.nuget.cache
+/WFA_POE/obj/WFA_POE.csproj.nuget.dgspec.json
+/WFA_POE/obj/WFA_POE.csproj.nuget.g.props
