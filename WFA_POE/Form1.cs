@@ -160,6 +160,8 @@ namespace WFA_POE
                         break;
                 }
             }
+            
+            engine.GameMap.UpdateVision();
         }
         #endregion
 

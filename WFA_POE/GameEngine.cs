@@ -14,6 +14,7 @@ namespace WFA_POE
 
         public GameEngine()
         {
+            //to makesure the map stays the same size as the map thats being loaded, I'm passing in the map constructor variables through here to make them accessable.
             gameMap = new Map(10, 15, 10, 15, 5, 5); 
         }
 
