@@ -16,7 +16,8 @@ namespace WFA_POE
             goldAmount = rndm.Next(1, 6);
         }
 
-        public int GoldAmount { get => goldAmount; }
+        //gold has a setter so that it can be set back to its prevoius value when it is created in the loading section of the game.
+        public int GoldAmount { get => goldAmount; set => goldAmount = value; } 
 
         public override string ToString()
         {

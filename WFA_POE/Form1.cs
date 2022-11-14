@@ -6,7 +6,8 @@ namespace WFA_POE
     {
         private GameEngine engine;
         private DataSet dataSet = new DataSet();
-        private DataTable dataTable = new DataTable();
+        private DataTable characterTable = new DataTable();
+        private DataTable itemsTable = new DataTable();
 
 
         public GameForm()
@@ -17,38 +18,61 @@ namespace WFA_POE
             DispPlayerStats();
             UpdateEnemyComboBox();
 
-            //saving
-            dataSet.Tables.Add(dataTable);
-            dataTable.Columns.Add(new DataColumn("ObjectType", typeof(string)));
-            dataTable.Columns.Add(new DataColumn("Xpos", typeof(int)));
-            dataTable.Columns.Add(new DataColumn("YPos", typeof(int)));
-            dataTable.Columns.Add(new DataColumn("Hp", typeof(int)));
-            dataTable.Columns.Add(new DataColumn("MaxHp", typeof(int)));
-            dataTable.Columns.Add(new DataColumn("Gold", typeof(int)));
+            //setting up the table of characters
+            dataSet.Tables.Add(characterTable);
+            characterTable.Columns.Add(new DataColumn("ObjectType", typeof(string)));
+            characterTable.Columns.Add(new DataColumn("Xpos", typeof(int)));
+            characterTable.Columns.Add(new DataColumn("YPos", typeof(int)));
+            characterTable.Columns.Add(new DataColumn("Hp", typeof(int)));
+            characterTable.Columns.Add(new DataColumn("MaxHp", typeof(int)));
+            characterTable.Columns.Add(new DataColumn("Gold", typeof(int)));
+
+            //setting up the table f items
+            dataSet.Tables.Add(itemsTable);
+            itemsTable.Columns.Add(new DataColumn("ObjectType", typeof(string)));
+            itemsTable.Columns.Add(new DataColumn("Xpos", typeof(int)));
+            itemsTable.Columns.Add(new DataColumn("Ypos", typeof(int)));
+            itemsTable.Columns.Add(new DataColumn("Gold", typeof(int)));
         }
 
         #region Save&&Load
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            dataTable.Rows.Add("Hero", engine.GameMap.GameHero.X, engine.GameMap.GameHero.Y, engine.GameMap.GameHero.Hp, engine.GameMap.GameHero.MaxHp, engine.GameMap.GameHero.GoldAmount);
+            //hero into table
+            characterTable.Rows.Add("Hero", engine.GameMap.GameHero.X, engine.GameMap.GameHero.Y, engine.GameMap.GameHero.Hp, engine.GameMap.GameHero.MaxHp, engine.GameMap.GameHero.GoldAmount);
 
+            //Enemies into table
             for (int i = 0; i < engine.GameMap.GameEnemies.Length; i++)
             {
                 switch (engine.GameMap.GameEnemies[i])
                 {
                     case SwampCreature:
-                        dataTable.Rows.Add("Swamp Creature", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
+                        characterTable.Rows.Add("Swamp Creature", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
                         break;
                     case Mage:
-                        dataTable.Rows.Add("Mage", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
+                        characterTable.Rows.Add("Mage", engine.GameMap.GameEnemies[i].X, engine.GameMap.GameEnemies[i].Y, engine.GameMap.GameEnemies[i].Hp, engine.GameMap.GameEnemies[i].MaxHp, engine.GameMap.GameEnemies[i].GoldAmount);
                         break;
                 }
             }
-            dataSet.WriteXml("SavedData.xml");
+
+            //items into table
+            for (int i = 0; i < engine.GameMap.Items.Length; i++)
+            {
+                switch (engine.GameMap.Items[i])
+                {
+                    case Gold:
+                        itemsTable.Rows.Add("Gold", engine.GameMap.Items[i].X, engine.GameMap.Items[i].Y, ((Gold)engine.GameMap.Items[i]).GoldAmount);
+                        break;
+                }
+            }
+
+            dataSet.WriteXml("XMLData.xml");
         }
         private void loadBtn_Click(object sender, EventArgs e)
         {
+            //reseting the gameengine
             engine = new GameEngine();
+            //setting the enemies and items arrays to be new arrays with the same length as the current game
             engine.GameMap.Items = new Item[engine.GameMap.Items.Length];
             engine.GameMap.GameEnemies = new Enemy[engine.GameMap.GameEnemies.Length];
 
@@ -56,14 +80,15 @@ namespace WFA_POE
             {
                 for (int j = 1; j < engine.GameMap.MapHeight - 1; j++)
                 {
+                    //setting all the tiles in the map to be empty tiles
                     engine.GameMap.GameMap[i, j] = new EmptyTile(j, i) { Type = Tile.TileType.EmptyTile };
                 }
             }
 
             DataSet loadSet = new DataSet();
-            loadSet.ReadXml("SavedData.xml");
+            loadSet.ReadXml("XMLData.xml");
 
-            foreach (DataRow row in loadSet.Tables[0].Rows)
+            foreach (DataRow row in loadSet.Tables[0].Rows)//tables[0] is the hero and enemies table
             {
                 string objectType = (string)row["ObjectType"];
                 int xPos = Convert.ToInt32(row["Xpos"]);
@@ -103,8 +128,24 @@ namespace WFA_POE
                         }
                         engine.GameMap.GameMap[yPos, xPos] = swampCreature;
                         break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (DataRow row in loadSet.Tables[1].Rows)//Tables[1] is the items table
+            {
+                string objectType = (string)row["ObjectType"];
+                int xPos = Convert.ToInt32(row["Xpos"]);
+                int yPos = Convert.ToInt32(row["Ypos"]);
+                int gold = Convert.ToInt32(row["Gold"]);
+
+                switch (objectType)
+                {
+
                     case "Gold":
                         Gold _gold = new Gold(xPos, yPos);
+                        _gold.GoldAmount = gold;
                         for (int i = 0; i < engine.GameMap.Items.Length; i++)
                         {
                             if (engine.GameMap.Items[i] is null)
@@ -113,6 +154,7 @@ namespace WFA_POE
                             }
                         }
                         engine.GameMap.GameMap[yPos, xPos] = _gold;
+                        engine.GameMap.GameMap[yPos, xPos].Type = Tile.TileType.Gold;
                         break;
                     default:
                         break;
