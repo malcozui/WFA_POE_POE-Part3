@@ -27,6 +27,7 @@ namespace WFA_POE
             dataTable.Columns.Add(new DataColumn("Gold", typeof(int)));
         }
 
+        #region Save&&Load
         private void saveBtn_Click(object sender, EventArgs e)
         {
             dataTable.Rows.Add("Hero", engine.GameMap.GameHero.X, engine.GameMap.GameHero.Y, engine.GameMap.GameHero.Hp, engine.GameMap.GameHero.MaxHp, engine.GameMap.GameHero.GoldAmount);
@@ -106,6 +107,8 @@ namespace WFA_POE
                 }
             }
         }
+        #endregion
+
         #region Events
         private void Btn_Attack_Click(object sender, EventArgs e)
         {
