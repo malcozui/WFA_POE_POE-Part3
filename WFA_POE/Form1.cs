@@ -54,11 +54,11 @@ namespace WFA_POE
             foreach (DataRow row in loadSet.Tables[0].Rows)
             {
                 string objectType = (string)row["ObjectType"];
-                int xPos = (int)row["Xpos"];
-                int yPos = (int)row["Ypos"];
-                int hp = (int)row["Hp"];
-                int maxHp = (int)row["MaxHp"];
-                int gold = (int)row["Gold"];
+                int xPos = Convert.ToInt32(row["Xpos"]);
+                int yPos = Convert.ToInt32(row["Ypos"]);
+                int hp = Convert.ToInt32(row["Hp"]);
+                int maxHp = Convert.ToInt32(row["MaxHp"]);
+                int gold = Convert.ToInt32(row["Gold"]);
 
                 switch (objectType)
                 {
