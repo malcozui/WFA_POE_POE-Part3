@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.assets.cache
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.csproj.AssemblyReference.cache
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.GeneratedMSBuildEditorConfig.editorconfig
+/WFA_POE/obj/Release/net6.0-windows/WFA_POE.assets.cache
+/WFA_POE/obj/Release/net6.0-windows/WFA_POE.csproj.AssemblyReference.cache
+/WFA_POE/obj/Release/net6.0-windows/WFA_POE.GeneratedMSBuildEditorConfig.editorconfig
