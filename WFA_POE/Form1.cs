@@ -169,7 +169,7 @@ namespace WFA_POE
         private void Btn_Attack_Click(object sender, EventArgs e)
         {
             if (ComboBox_Enemies.SelectedIndex == -1) return;
-            if (CheckDead()) return; ;//Checking if the enemy is dead before attacking
+            if (CheckDead()) return;//Checking if the enemy is dead before attacking
             bool success = engine.GameMap.GameHero.CheckRange(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
             engine.GameMap.GameHero.Attack(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
             if (success) UpdateSelectedEnemyStats();
