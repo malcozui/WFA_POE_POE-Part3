@@ -1,49 +1,18 @@
 ﻿using System;
 
-public class RangedWeapon
+namespace WFA_POE
 {
-	int range;
-	public RangedWeapon()
-	{
-		enum Level
-	{
-		Rifle,
-		LongBow
-	}
-	public range int
-		{		
-		return = range;
-		}
+    internal class RangedWeapon : Weapon
+    {
+        public RangedWeapon(int x, int y) : base(x, y)
+        {
 
-// SETTING A NUMBER TO THE DURABILITY , RANGE AND DAMAGE TO DETERMINE HOW MUCH THEY CAN DO
-public int Rifle
-{
-		int durability;
-	durability = 3;
+        }
 
-		int range = 3;
-
-		int damage
-	damage= 5;
-
-		int cost;
-	cost = 7;
-}
-// SETTING A NUMBER TO THE DURABILITY , RANGE AND DAMAGE TO DETERMINE HOW MUCH THEY CAN DO
-public int LongBow
-{
-		int durability;
-	durability = 4;
-
-	    int range = 2;
-
-		int damage
-		damage= 4;
-
-		int cost;
-	cost = 6;
-}
-
-		
-}
+        public override int Range { get => base.Range; }
+        public override string ToString()
+        {
+            return weaponType;
+        }
+    }
 }

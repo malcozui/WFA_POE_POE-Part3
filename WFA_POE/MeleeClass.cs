@@ -30,7 +30,7 @@ namespace WFA_POE
                     break;
             }
         }
-
+        public override int Range { get => 1; }
         public override string ToString()
         {
             return weaponType;

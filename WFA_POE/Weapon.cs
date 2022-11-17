@@ -21,11 +21,11 @@ namespace WFA_POE
         }
 
         #region Properties
-        public int Dmg { get => dmg; set => dmg = value; }
-        public virtual int Range { get => dmg; set => dmg = value; }
-        public int Durability { get => dmg; set => dmg = value; }
-        public int Cost { get => dmg; set => dmg = value; }
-        public int WeaponType { get => dmg; set => dmg = value; }
+        public int Dmg { get => dmg; }
+        public virtual int Range { get => range;  }
+        public int Durability { get => durability; set => durability = value; }
+        public int Cost { get => cost; }
+        public string WeaponType { get => weaponType; set => weaponType = value; }
         #endregion
 
         public override abstract string ToString();
