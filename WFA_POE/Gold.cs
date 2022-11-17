@@ -21,7 +21,7 @@ namespace WFA_POE
 
         public override string ToString()
         {
-            return goldAmount.ToString();
+            return "Gold";
         }
     }
 
