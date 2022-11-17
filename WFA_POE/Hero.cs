@@ -21,7 +21,15 @@ namespace WFA_POE
 
         public override string ToString() // Display hero stats
         {
-            return ($"Player Stats :\nHp : {this.hp} / {this.maxHp} \nDamage : {this.damage}\n[{this.X},{this.Y}]\n Gold {this.goldAmount}");
+            if (weapon is null)
+            {
+                return $"Player Stats: {Environment.NewLine}HP:{hp}/{maxHp} {Environment.NewLine}Current weapon: Bare Hands {Environment.NewLine}Weapon range: 1 {Environment.NewLine}Weapon damage: {Damage} {Environment.NewLine}[{x}, {y}]{Environment.NewLine}Gold Amount: {goldAmount}";
+            }
+            else
+            {
+                return $"Player Stats: {Environment.NewLine}HP:{hp}/{maxHp} {Environment.NewLine}Current weapon: {weapon.WeaponType} {Environment.NewLine}Weapon range: {weapon.Range} {Environment.NewLine}Weapon damage: {weapon.Dmg} {Environment.NewLine}[{x}, {y}]{Environment.NewLine}Gold Amount: {goldAmount}";
+
+            }
         }
     }
 }

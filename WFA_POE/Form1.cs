@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 
 namespace WFA_POE
 {
@@ -57,6 +57,7 @@ namespace WFA_POE
                 ComboBox_Enemies.Items[ComboBox_Enemies.SelectedIndex] = engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].ToString();
             }
 
+            DispPlayerStats();
             UpdateMap();
             UpdateVision();
             engine.EnemiesAttack();
@@ -181,7 +182,7 @@ namespace WFA_POE
             shopComboBox.Items.Clear();
             for (int i = 0; i < 3; i++)
             {
-                shopTextBox.Text += "� " + engine.GameShop.DisplayWeapon(i);
+                shopTextBox.Text += "♦ " + engine.GameShop.DisplayWeapon(i);
                 shopTextBox.Text += Environment.NewLine;
 
                 shopComboBox.Items.Add(engine.GameShop.DisplayWeapon(i));
