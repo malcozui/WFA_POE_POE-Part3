@@ -15,8 +15,8 @@ namespace WFA_POE
 
         public GameEngine()
         {
-            
-            gameMap = new Map(10, 15, 10, 15, 5, 5); 
+            gameMap = new Map(10, 15, 10, 15, 5, 5);
+            shop = new Shop();
         }
 
         #region Properties
@@ -84,12 +84,15 @@ namespace WFA_POE
                         gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X - 1] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y);
                         break;
                 }
+                gameMap.UpdateVision();
                 return true;
             }
             else
             {
+                gameMap.UpdateVision();
                 return false;
             }
+
         }
 
         public void MoveEnemies(Character.Movement direction = Character.Movement.NoMovement)
@@ -175,14 +178,20 @@ namespace WFA_POE
                             if (gameMap.GameEnemies[i] == gameMap.GameEnemies[j]) continue;
                             //attacking the enemy 
                             gameMap.GameEnemies[i].Attack(gameMap.GameEnemies[j]);
+
+                            if (gameMap.GameEnemies[j].IsDead())
+                            {
+                                gameMap.GameMap[gameMap.GameEnemies[j].Y, gameMap.GameEnemies[j].X] = new EmptyTile(gameMap.GameEnemies[j].X, gameMap.GameEnemies[j].Y);
+                                
+                                //loot the character they killed if they're in range.
+                                if (gameMap.GameEnemies[i].CheckRange(gameMap.GameEnemies[j])) gameMap.GameEnemies[i].Loot(gameMap.GameEnemies[j]);
+                            }
                         }
                         break;
-                    default:
-                        break;
                 }
-
                 if (gameMap.GameEnemies[i].IsDead())
                 {
+                    //deletes the dead enemys by making their Tile blank
                     gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                 }
             }

@@ -31,11 +31,15 @@
             this.LblMap = new System.Windows.Forms.Label();
             this.playerPanel = new System.Windows.Forms.Panel();
             this.loadBtn = new System.Windows.Forms.Button();
-            this.saveBtn = new System.Windows.Forms.Button();
             this.Btn_Attack = new System.Windows.Forms.Button();
             this.ComboBox_Enemies = new System.Windows.Forms.ComboBox();
+            this.saveBtn = new System.Windows.Forms.Button();
             this.Re_Player_Stats = new System.Windows.Forms.RichTextBox();
             this.enemyPanel = new System.Windows.Forms.Panel();
+            this.shopLbl = new System.Windows.Forms.Label();
+            this.buyBtn = new System.Windows.Forms.Button();
+            this.shopComboBox = new System.Windows.Forms.ComboBox();
+            this.shopTextBox = new System.Windows.Forms.RichTextBox();
             this.Re_Enemy_Stats = new System.Windows.Forms.RichTextBox();
             this.gameLogoPanel = new System.Windows.Forms.Panel();
             this.LblStart = new System.Windows.Forms.Label();
@@ -45,10 +49,6 @@
             this.Btn_Left = new System.Windows.Forms.Button();
             this.Btn_Right = new System.Windows.Forms.Button();
             this.Btn_Up = new System.Windows.Forms.Button();
-            this.shopTextBox = new System.Windows.Forms.RichTextBox();
-            this.shopComboBox = new System.Windows.Forms.ComboBox();
-            this.buyBtn = new System.Windows.Forms.Button();
-            this.shopLbl = new System.Windows.Forms.Label();
             this.playerPanel.SuspendLayout();
             this.enemyPanel.SuspendLayout();
             this.gameLogoPanel.SuspendLayout();
@@ -62,7 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LblMap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.LblMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LblMap.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LblMap.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LblMap.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.LblMap.Location = new System.Drawing.Point(338, 65);
             this.LblMap.Name = "LblMap";
@@ -101,22 +101,6 @@
             this.loadBtn.UseVisualStyleBackColor = false;
             this.loadBtn.Click += new System.EventHandler(this.loadBtn_Click);
             // 
-            // saveBtn
-            // 
-            this.saveBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.saveBtn.FlatAppearance.BorderSize = 0;
-            this.saveBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.saveBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.saveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveBtn.ForeColor = System.Drawing.Color.White;
-            this.saveBtn.Location = new System.Drawing.Point(13, 457);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(303, 45);
-            this.saveBtn.TabIndex = 6;
-            this.saveBtn.Text = "Save";
-            this.saveBtn.UseVisualStyleBackColor = false;
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
-            // 
             // Btn_Attack
             // 
             this.Btn_Attack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
@@ -145,6 +129,22 @@
             this.ComboBox_Enemies.TabIndex = 5;
             this.ComboBox_Enemies.SelectedIndexChanged += new System.EventHandler(this.ComboBox_Enemies_SelectedIndexChanged);
             // 
+            // saveBtn
+            // 
+            this.saveBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
+            this.saveBtn.FlatAppearance.BorderSize = 0;
+            this.saveBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.saveBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.saveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveBtn.ForeColor = System.Drawing.Color.White;
+            this.saveBtn.Location = new System.Drawing.Point(13, 457);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(303, 45);
+            this.saveBtn.TabIndex = 6;
+            this.saveBtn.Text = "Save";
+            this.saveBtn.UseVisualStyleBackColor = false;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
             // Re_Player_Stats
             // 
             this.Re_Player_Stats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
@@ -168,6 +168,55 @@
             this.enemyPanel.Name = "enemyPanel";
             this.enemyPanel.Size = new System.Drawing.Size(327, 613);
             this.enemyPanel.TabIndex = 2;
+            // 
+            // shopLbl
+            // 
+            this.shopLbl.AutoSize = true;
+            this.shopLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.shopLbl.ForeColor = System.Drawing.Color.White;
+            this.shopLbl.Location = new System.Drawing.Point(133, 295);
+            this.shopLbl.Name = "shopLbl";
+            this.shopLbl.Size = new System.Drawing.Size(49, 21);
+            this.shopLbl.TabIndex = 1;
+            this.shopLbl.Text = "Shop";
+            // 
+            // buyBtn
+            // 
+            this.buyBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
+            this.buyBtn.FlatAppearance.BorderSize = 0;
+            this.buyBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.buyBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.buyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buyBtn.ForeColor = System.Drawing.Color.White;
+            this.buyBtn.Location = new System.Drawing.Point(12, 531);
+            this.buyBtn.Name = "buyBtn";
+            this.buyBtn.Size = new System.Drawing.Size(305, 45);
+            this.buyBtn.TabIndex = 8;
+            this.buyBtn.Text = "Buy";
+            this.buyBtn.UseVisualStyleBackColor = false;
+            this.buyBtn.Click += new System.EventHandler(this.buyBtn_Click);
+            // 
+            // shopComboBox
+            // 
+            this.shopComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.shopComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.shopComboBox.ForeColor = System.Drawing.Color.White;
+            this.shopComboBox.FormattingEnabled = true;
+            this.shopComboBox.Location = new System.Drawing.Point(12, 502);
+            this.shopComboBox.Name = "shopComboBox";
+            this.shopComboBox.Size = new System.Drawing.Size(305, 23);
+            this.shopComboBox.TabIndex = 8;
+            this.shopComboBox.SelectedIndexChanged += new System.EventHandler(this.shopComboBox_SelectedIndexChanged);
+            // 
+            // shopTextBox
+            // 
+            this.shopTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.shopTextBox.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.shopTextBox.Location = new System.Drawing.Point(12, 319);
+            this.shopTextBox.Name = "shopTextBox";
+            this.shopTextBox.Size = new System.Drawing.Size(305, 177);
+            this.shopTextBox.TabIndex = 2;
+            this.shopTextBox.Text = "Shop Window";
             // 
             // Re_Enemy_Stats
             // 
@@ -292,55 +341,6 @@
             this.Btn_Up.Text = "↑";
             this.Btn_Up.UseVisualStyleBackColor = false;
             this.Btn_Up.Click += new System.EventHandler(this.Btn_Up_Click);
-            // 
-            // shopTextBox
-            // 
-            this.shopTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.shopTextBox.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.shopTextBox.Location = new System.Drawing.Point(12, 319);
-            this.shopTextBox.Name = "shopTextBox";
-            this.shopTextBox.Size = new System.Drawing.Size(305, 177);
-            this.shopTextBox.TabIndex = 2;
-            this.shopTextBox.Text = "Shop Window";
-            // 
-            // shopComboBox
-            // 
-            this.shopComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.shopComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.shopComboBox.ForeColor = System.Drawing.Color.White;
-            this.shopComboBox.FormattingEnabled = true;
-            this.shopComboBox.Location = new System.Drawing.Point(12, 502);
-            this.shopComboBox.Name = "shopComboBox";
-            this.shopComboBox.Size = new System.Drawing.Size(305, 23);
-            this.shopComboBox.TabIndex = 8;
-            this.shopComboBox.SelectedIndexChanged += new System.EventHandler(this.shopComboBox_SelectedIndexChanged);
-            // 
-            // buyBtn
-            // 
-            this.buyBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
-            this.buyBtn.FlatAppearance.BorderSize = 0;
-            this.buyBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-            this.buyBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.buyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buyBtn.ForeColor = System.Drawing.Color.White;
-            this.buyBtn.Location = new System.Drawing.Point(12, 531);
-            this.buyBtn.Name = "buyBtn";
-            this.buyBtn.Size = new System.Drawing.Size(305, 45);
-            this.buyBtn.TabIndex = 8;
-            this.buyBtn.Text = "Buy";
-            this.buyBtn.UseVisualStyleBackColor = false;
-            this.buyBtn.Click += new System.EventHandler(this.buyBtn_Click);
-            // 
-            // shopLbl
-            // 
-            this.shopLbl.AutoSize = true;
-            this.shopLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.shopLbl.ForeColor = System.Drawing.Color.White;
-            this.shopLbl.Location = new System.Drawing.Point(133, 295);
-            this.shopLbl.Name = "shopLbl";
-            this.shopLbl.Size = new System.Drawing.Size(49, 21);
-            this.shopLbl.TabIndex = 1;
-            this.shopLbl.Text = "Shop";
             // 
             // GameForm
             // 

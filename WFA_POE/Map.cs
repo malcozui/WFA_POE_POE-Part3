@@ -17,15 +17,16 @@ namespace WFA_POE
         private Item?[] items;
 
         /// <summary>
-        /// The Constructor for the map object
+        /// The Constructor for the map object.
         /// </summary>
-        /// <param name="minMapWidth">The inclusive minimum width of the map</param>
-        /// <param name="maxMapWidth">The exclusive maximum width of the map </param>
-        /// <param name="minMapHeight">The inclusive minimum height of the map</param>
-        /// <param name="maxMapHeight">The exclusive maximum height of the map</param>
-        /// <param name="enemyCount">The amount of enemies to spawn</param>
-        /// <param name="goldCount">The amount of gold to spawn</param>
-        public Map(int minMapWidth, int maxMapWidth, int minMapHeight, int maxMapHeight, int enemyCount, int goldCount)  
+        /// <param name="minMapWidth">The inclusive minimum width of the map.</param>
+        /// <param name="maxMapWidth">The exclusive maximum width of the map.</param>
+        /// <param name="minMapHeight">The inclusive minimum height of the map.</param>
+        /// <param name="maxMapHeight">The exclusive maximum height of the map.</param>
+        /// <param name="enemyCount">The amount of enemies to spawn.</param>
+        /// <param name="goldCount">The amount of gold to spawn.</param>
+        /// <param name="weaponCount">The amount of weapons to spawn.</param>
+        public Map(int minMapWidth, int maxMapWidth, int minMapHeight, int maxMapHeight, int enemyCount, int goldCount, int weaponCount)  
         {
             enemies = new Enemy[enemyCount];
             items = new Item[goldCount];
@@ -81,6 +82,9 @@ namespace WFA_POE
 
         #region Methods
 
+        /// <summary>
+        /// Updates the vision of all enemies and the hero.
+        /// </summary>
         public void UpdateVision() //Update Vision for each class
         {
             Tile[] tmp = new Tile[4];
@@ -101,6 +105,12 @@ namespace WFA_POE
             }
         }
 
+        /// <summary>
+        /// Takes in coordinates and returns an Item if one exists there. Returns null otherwise.
+        /// </summary>
+        /// <param name="y">The y coordinate.</param>
+        /// <param name="x">The x coordinate.</param>
+        /// <returns>An Item at the given position if it exists. Null if one does not.</returns>
         public Item? GetItemAtPosition(int y, int x)
         {
             for (int i = 0; i < items.Length; i++)
@@ -119,6 +129,11 @@ namespace WFA_POE
             return null;
         }
 
+        /// <summary>
+        /// Generates a Tile on the map, in a random spot, by the given type.
+        /// </summary>
+        /// <param name="type">The Type of Tile to Generate.</param>
+        /// <returns>A Tile object of what was placed on the Map.</returns>
         private Tile Create(Tile.TileType type)
         {
             bool loop;
@@ -174,6 +189,10 @@ namespace WFA_POE
             }
         }
 
+        /// <summary>
+        /// Adds an Enemy to the Enemy array by finding the first available null slot and storing the given Enemy in it.
+        /// </summary>
+        /// <param name="enemy">The Enemy to add to the Enemy array.</param>
         private void AddEnemy(Enemy enemy)
         {
             for (int i = 0; i < enemies.Length; i++)
@@ -186,6 +205,10 @@ namespace WFA_POE
             }
         }
 
+        /// <summary>
+        /// Adds an Item to the Item array by finding the first available null slot and storing the given Item in it.
+        /// </summary>
+        /// <param name="item">The Item to add to the Item array.</param>
         private void AddItem(Item item)
         {
             for (int i = 0; i < items.Length; i++)

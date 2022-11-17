@@ -31,13 +31,32 @@ namespace WFA_POE
         private void Btn_Attack_Click(object sender, EventArgs e)
         {
             if (ComboBox_Enemies.SelectedIndex == -1) return;
-            if (CheckDead()) return;//Checking if the enemy is dead before attacking
+            if (engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].IsDead()) return;//Checking if the enemy is dead before attacking
             bool success = engine.GameMap.GameHero.CheckRange(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
             engine.GameMap.GameHero.Attack(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
             if (success) UpdateSelectedEnemyStats();
             else Re_Enemy_Stats.Text = "Attack Unsucessful";
-            CheckDead(); //checking if the enemy is dead after attacking
+            
+            //checking if the enemy is dead after attacking
+            if (engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].IsDead())
+            {
+                engine.GameMap.GameHero.Loot(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]); //looting
+                
+                //setting the tile to be Empty
+                engine.GameMap.GameMap[engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].Y, engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].X] 
+                    = new EmptyTile(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].X, engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].Y);
 
+                //Updating the Drop down
+                ComboBox_Enemies.Items[ComboBox_Enemies.SelectedIndex] = "Enemy Dead";
+            }
+            else
+            {
+                //updating the Drop down
+                ComboBox_Enemies.Items[ComboBox_Enemies.SelectedIndex] = engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].ToString();
+            }
+
+            UpdateMap();
+            UpdateVision();
             engine.EnemiesAttack();
         }
         
@@ -139,21 +158,7 @@ namespace WFA_POE
 
         #region Additional Methods
 
-        private bool CheckDead()
-        {
-            if (engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].IsDead())
-            {
-                Re_Enemy_Stats.Text = "Enemy Dead";
-                engine.GameMap.GameMap[engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].Y,
-                               engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].X]
-                    = new EmptyTile(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].X, engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].Y);
-                UpdateMap();
-                DispPlayerStats();
-                UpdateEnemyComboBox();
-                return true;
-            }
-            return false;
-        }
+        
 
         #endregion
 
