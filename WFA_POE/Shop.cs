@@ -36,9 +36,12 @@ namespace WFA_POE
 
 		public void Buy(int index)
 		{
-			buyer.GoldAmount -= weapons[index].Cost;
-			buyer.Pickup(weapons[index]);
-			weapons[index] = RandomWeapon();
+			if (index == 1 || index == 2 || index == 3)
+			{
+				buyer.GoldAmount -= weapons[index].Cost;
+				buyer.Pickup(weapons[index]);
+				weapons[index] = RandomWeapon();
+			}
 		}
 
 		public bool CanBuy(int index)

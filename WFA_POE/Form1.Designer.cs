@@ -62,7 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LblMap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.LblMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LblMap.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LblMap.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LblMap.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.LblMap.Location = new System.Drawing.Point(338, 65);
             this.LblMap.Name = "LblMap";

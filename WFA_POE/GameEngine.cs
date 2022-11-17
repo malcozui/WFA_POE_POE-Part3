@@ -15,7 +15,7 @@ namespace WFA_POE
 
         public GameEngine()
         {
-            gameMap = new Map(10, 13, 15, 17, 5, 5, 5);
+            gameMap = new Map(15, 20, 15, 20, 5, 5, 5);
             shop = new Shop(gameMap.GameHero);
         }
 
@@ -165,9 +165,6 @@ namespace WFA_POE
                 if (gameMap.GameEnemies[i].IsDead()) continue;
                 switch (gameMap.GameEnemies[i])
                 {
-                    case SwampCreature:
-                        gameMap.GameEnemies[i].Attack(gameMap.GameHero);
-                        break;
                     case Mage:
                         //attacking player
                         gameMap.GameEnemies[i].Attack(gameMap.GameHero);
@@ -187,6 +184,9 @@ namespace WFA_POE
                                 if (gameMap.GameEnemies[i].CheckRange(gameMap.GameEnemies[j])) gameMap.GameEnemies[i].Loot(gameMap.GameEnemies[j]);
                             }
                         }
+                        break;
+                    default:
+                        gameMap.GameEnemies[i].Attack(gameMap.GameHero);
                         break;
                 }
                 if (gameMap.GameEnemies[i].IsDead())
