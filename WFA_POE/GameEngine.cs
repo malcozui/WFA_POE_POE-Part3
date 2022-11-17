@@ -178,10 +178,11 @@ namespace WFA_POE
 
                             if (gameMap.GameEnemies[j].IsDead())
                             {
-                                gameMap.GameMap[gameMap.GameEnemies[j].Y, gameMap.GameEnemies[j].X] = new EmptyTile(gameMap.GameEnemies[j].X, gameMap.GameEnemies[j].Y);
-                                
                                 //loot the character they killed if they're in range.
                                 if (gameMap.GameEnemies[i].CheckRange(gameMap.GameEnemies[j])) gameMap.GameEnemies[i].Loot(gameMap.GameEnemies[j]);
+                                
+                                //ensures that the tile of a dead enemy that a player moves into doesn't get overwritten by a blank tile.
+                                if (!(gameMap.GameHero.X == gameMap.GameEnemies[j].X || gameMap.GameHero.Y == gameMap.GameEnemies[j].Y)) gameMap.GameMap[gameMap.GameEnemies[j].Y, gameMap.GameEnemies[j].X] = new EmptyTile(gameMap.GameEnemies[j].X, gameMap.GameEnemies[j].Y);
                             }
                         }
                         break;
