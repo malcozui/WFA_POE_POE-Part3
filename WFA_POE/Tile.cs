@@ -28,7 +28,6 @@ namespace WFA_POE
 
         public int X { get { return x; } set { x = value; } } //Get and setter
         public int Y { get { return y; } set { y = value; } } //Get and setter
-        public TileType Type { get; set; } //Get and setter
 
         #endregion   //Expand this for more 
 
