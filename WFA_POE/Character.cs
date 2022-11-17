@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WFA_POE
 {
-    abstract class Character : Tile
+    public abstract class Character : Tile
     {
         protected int hp;
         protected int maxHp;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WFA_POE
 {
-    abstract class Enemy : Character
+    public abstract class Enemy : Character
     {
         public Random rndm = new();
 
