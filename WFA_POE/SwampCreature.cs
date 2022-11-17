@@ -11,6 +11,7 @@ namespace WFA_POE
         //hp is optional so that data can be written into it at creation time for saving and loading
         public SwampCreature(int x, int y, int hp = 10) : base(x, y, hp, 10, 1)
         {
+            weapon = new MeleeWeapon(MeleeWeapon.Type.Dagger);
             this.hp = hp;
         }
 
