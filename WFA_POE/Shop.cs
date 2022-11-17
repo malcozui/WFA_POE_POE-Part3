@@ -4,22 +4,17 @@ namespace WFA_POE
 {
 	public class Shop
 	{
-		// SAYING WHAT WEAPONS THEY ARE AND AS WELL THAT THEY SHOULD BE PICKED RANDOMLY
-		public Shop()
-		{
-			string[] weapons = { "longbow", "Dagger", "longword"};
+		//private Weapon[] weapons;
+		private Random random;
+		private Character buyer;
 
+		public Shop(Character buyer)
+		{
+			this.buyer = buyer;
+
+			random = new Random();
+		}
 		
-
-
-		}
-		private class Shop
-		{
-			random random = new random;
-
-			return Dagger;
-			return longsword;
-			return Rifle
-		}
+		
 	}
 }
