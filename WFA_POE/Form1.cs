@@ -113,6 +113,7 @@ namespace WFA_POE
                             if (engine.GameMap.GameEnemies[i] is null)
                             {
                                 engine.GameMap.GameEnemies[i] = mage;
+                                break;
                             }
                         }
                         engine.GameMap.GameMap[yPos, xPos] = mage;
@@ -124,6 +125,7 @@ namespace WFA_POE
                             if (engine.GameMap.GameEnemies[i] is null)
                             {
                                 engine.GameMap.GameEnemies[i] = swampCreature;
+                                break;
                             }
                         }
                         engine.GameMap.GameMap[yPos, xPos] = swampCreature;
@@ -151,6 +153,7 @@ namespace WFA_POE
                             if (engine.GameMap.Items[i] is null)
                             {
                                 engine.GameMap.Items[i] = _gold;
+                                break;
                             }
                         }
                         engine.GameMap.GameMap[yPos, xPos] = _gold;
