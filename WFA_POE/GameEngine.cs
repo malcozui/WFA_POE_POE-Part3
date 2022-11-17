@@ -15,7 +15,7 @@ namespace WFA_POE
 
         public GameEngine()
         {
-            gameMap = new Map(10, 15, 10, 15, 5, 5);
+            gameMap = new Map(10, 13, 15, 17, 5, 5, 5);
             shop = new Shop();
         }
 
