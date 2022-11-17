@@ -97,8 +97,7 @@ namespace WFA_POE
         {
             switch (i)
             {
-                case Gold:
-                    Gold tmp = (Gold)i;
+                case Gold tmp:
                     goldAmount += tmp.GoldAmount;
                     break;
                 default:

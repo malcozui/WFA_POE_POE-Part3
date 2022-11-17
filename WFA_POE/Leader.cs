@@ -1,11 +1,13 @@
 ﻿using System;
 
-public class leaders
+namespace WFA_POE
 {
-	public target()
+	public class Leader
 	{
-		public int leaders { get; set; }
-	}
 
-}
+		public Leader()
+		{
+		
+		}
+	}
 }

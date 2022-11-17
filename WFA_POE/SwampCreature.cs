@@ -8,6 +8,7 @@ namespace WFA_POE
 {
     internal class SwampCreature : Enemy
     {
+        //hp is optional so that data can be written into it at creation time for saving and loading
         public SwampCreature(int x, int y, int hp = 10) : base(x, y, hp, 10, 1)
         {
             this.hp = hp;
@@ -22,7 +23,7 @@ namespace WFA_POE
             //checking if all 4 tiles are full
             for (int i = 0; i < charactermovement.Length; i++)
             {
-                if (charactermovement[i].Type is not TileType.EmptyTile or TileType.Gold) blockedCount++;
+                if (charactermovement[i] is not EmptyTile or Item) blockedCount++;
             }
             if (blockedCount >= 4) return Movement.NoMovement;
 
@@ -31,27 +32,17 @@ namespace WFA_POE
             {
                 randomDirection = rndm.Next(4);
 
-                loop = !(charactermovement[randomDirection].Type is TileType.EmptyTile or TileType.Gold);
+                loop = !(charactermovement[randomDirection] is EmptyTile or Item);
             }
             // when loop false the enemy move
-            switch (randomDirection)
+            return randomDirection switch
             {
-                case 0:
-                    return Movement.Up;
-                    
-                case 1:
-                    return Movement.Down;
-                    
-                case 2:
-                    return Movement.Left;
-                    
-                case 3:
-                    return Movement.Right;
-                    
-                default:
-                    return Movement.NoMovement;                
-            }
-
+                0 => Movement.Up,
+                1 => Movement.Down,
+                2 => Movement.Left,
+                3 => Movement.Right,
+                _ => Movement.NoMovement
+            };
         }
     }
 }

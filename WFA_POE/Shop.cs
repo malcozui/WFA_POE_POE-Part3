@@ -4,7 +4,7 @@ namespace WFA_POE
 {
 	public class Shop
 	{
-		//private Weapon[] weapons;
+		private Weapon[] weapons;
 		private Random random;
 		private Character buyer;
 

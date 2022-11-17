@@ -14,13 +14,13 @@ namespace WFA_POE
 
         public GameEngine()
         {
-            //to makesure the map stays the same size as the map thats being loaded, I'm passing in the map constructor variables through here to make them accessable.
+            
             gameMap = new Map(10, 15, 10, 15, 5, 5); 
         }
 
         #region Properties
         
-        public Map GameMap { get { return gameMap; } }   //👾
+        public Map GameMap { get { return gameMap; } }
 
         #endregion
 
@@ -35,59 +35,51 @@ namespace WFA_POE
                 {
                     case Character.Movement.Up:
                         Item? item = gameMap.GetItemAtPosition(gameMap.GameHero.Y - 1, gameMap.GameHero.X);
-                        if (item is Gold)
+                        if (item is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item;
-                            gameMap.GameHero.GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameHero.Pickup(item);
                         }
                         break;
                     case Character.Movement.Down:
                         Item? item2 = gameMap.GetItemAtPosition(gameMap.GameHero.Y + 1, gameMap.GameHero.X);
-                        if (item2 is Gold)
+                        if (item2 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item2;
-                            gameMap.GameHero.GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameHero.Pickup(item2);
                         }
                         break;
                     case Character.Movement.Left:
                         Item? item3 = gameMap.GetItemAtPosition(gameMap.GameHero.Y, gameMap.GameHero.X - 1);
-                        if (item3 is Gold)
+                        if (item3 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item3;
-                            gameMap.GameHero.GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameHero.Pickup(item3);
                         }
                         break;
                     case Character.Movement.Right:
                         Item? item4 = gameMap.GetItemAtPosition(gameMap.GameHero.Y, gameMap.GameHero.X + 1);
-                        if (item4 is Gold)
+                        if (item4 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item4;
-                            gameMap.GameHero.GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameHero.Pickup(item4);
                         }
                         break;
                 }
                 //Moves the player in the requested direction
                 gameMap.GameHero.Move(direction);
                 
-                gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X] = new Hero(gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.MaxHp) { Type = Tile.TileType.Hero };
+                gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X] = new Hero(gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.MaxHp);
                 switch (direction)
                 {
                     //makes the tile the player was in empty after they leave.
                     case Character.Movement.Up:
-                        gameMap.GameMap[gameMap.GameHero.Y + 1, gameMap.GameHero.X] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameHero.Y + 1, gameMap.GameHero.X] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y);
                         break;
                     case Character.Movement.Down:
-                        gameMap.GameMap[gameMap.GameHero.Y - 1, gameMap.GameHero.X] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameHero.Y - 1, gameMap.GameHero.X] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y);
                         break;
                     case Character.Movement.Left:
-                        gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X + 1] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X + 1] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y);
                         break;
                     case Character.Movement.Right:
-                        gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X - 1] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X - 1] = new EmptyTile(gameMap.GameHero.X, gameMap.GameHero.Y);
                         break;
                 }
                 return true;
@@ -111,66 +103,51 @@ namespace WFA_POE
                 {
                     case Character.Movement.Up:
                         Item? item = gameMap.GetItemAtPosition(gameMap.GameEnemies[i].Y - 1, gameMap.GameEnemies[i].X);
-                        if (item is Gold)
+                        if (item is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item;
-                            gameMap.GameEnemies[i].GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameEnemies[i].Pickup(item);
                         }
                         break;
                     case Character.Movement.Down:
                         Item? item2 = gameMap.GetItemAtPosition(gameMap.GameEnemies[i].Y + 1, gameMap.GameEnemies[i].X);
-                        if (item2 is Gold)
+                        if (item2 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item2;
-                            gameMap.GameEnemies[i].GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameEnemies[i].Pickup(item2);
                         }
                         break;
                     case Character.Movement.Left:
                         Item? item3 = gameMap.GetItemAtPosition(gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X - 1);
-                        if (item3 is Gold)
+                        if (item3 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item3;
-                            gameMap.GameEnemies[i].GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameEnemies[i].Pickup(item3);
                         }
                         break;
                     case Character.Movement.Right:
                         Item? item4 = gameMap.GetItemAtPosition(gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X + 1);
-                        if (item4 is Gold)
+                        if (item4 is not null)
                         {
-                            Gold goldItem;
-                            goldItem = (Gold)item4;
-                            gameMap.GameEnemies[i].GoldAmount += goldItem.GoldAmount;
+                            gameMap.GameEnemies[i].Pickup(item4);
                         }
                         break;
                 }
                 //Moves the enemies in the requested direction
                 gameMap.GameEnemies[i].Move(direction);
-                switch (gameMap.GameEnemies[i])
-                {
-                    case SwampCreature:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = new SwampCreature(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp) { Type = Tile.TileType.Enemy };
-                        break;
-                    case Mage:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = new Mage(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp) { Type = Tile.TileType.Enemy };
-                        break;
-                }
+                gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = gameMap.GameEnemies[i];
+                
                 switch (direction)
                 {
                     //makes the tile the enemy was in empty after they leave.
                     case Character.Movement.Up:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y + 1, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameEnemies[i].Y + 1, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                         break;
                     case Character.Movement.Down:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y - 1, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameEnemies[i].Y - 1, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                         break;
                     case Character.Movement.Left:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X + 1] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X + 1] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                         break;
                     case Character.Movement.Right:
-                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X - 1] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y) { Type = Tile.TileType.EmptyTile };
+                        gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X - 1] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                         break;
                 }
             }
@@ -204,37 +181,37 @@ namespace WFA_POE
 
                 if (gameMap.GameEnemies[i].IsDead())
                 {
-                    gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y) { Type = Tile.TileType.EmptyTile };
+                    gameMap.GameMap[gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].X] = new EmptyTile(gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y);
                 }
             }
         }
 
-        public override string ToString() // Display methode
+        public override string ToString() // Display method
         {
             StringBuilder sb = new();
             for (int i = 0; i < gameMap.GameMap.GetLength(0); i++)
             {
                 for (int j = 0; j < gameMap.GameMap.GetLength(1); j++)
                 {
-                    switch (gameMap.GameMap[i, j].Type)
+                    switch (gameMap.GameMap[i, j])
                     {
-                        case Tile.TileType.Hero:
+                        case Hero:
                             sb.Append(HERO);
                             break;
-                        case Tile.TileType.Enemy:
-                            if (gameMap.GameMap[i, j] is SwampCreature) sb.Append(SWAMP_CREATURE);
-                            else sb.Append(MAGE);
+                        case SwampCreature:
+                            sb.Append(SWAMP_CREATURE);
                             break;
-                        case Tile.TileType.Obstacle:
+                        case Mage:
+                            sb.Append(MAGE);
+                            break;
+                        case Obstacle:
                             sb.Append(OBSTACLE);
                             break;
-                        case Tile.TileType.EmptyTile:
+                        case EmptyTile:
                             sb.Append(EMPTY);
                             break;
-                        case Tile.TileType.Gold:
+                        case Gold:
                             sb.Append(GOLD);
-                            break;
-                        default:
                             break;
                     }
                     sb.Append(' ');

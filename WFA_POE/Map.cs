@@ -43,11 +43,11 @@ namespace WFA_POE
 
                     if ((i == 0 || i == mapWidth - 1) || (j == 0 || j == mapHeight - 1))
                     {
-                        map[i, j] = new Obstacle(i, j) { Type = Tile.TileType.Obstacle };
+                        map[i, j] = new Obstacle(i, j);
                     }
                     else
                     {
-                        map[i, j] = new EmptyTile(i, j) { Type = Tile.TileType.EmptyTile };
+                        map[i, j] = new EmptyTile(i, j);
                     }
 
                 }
@@ -64,7 +64,6 @@ namespace WFA_POE
             for (int i = 0; i < items.Length; i++)
             {
                 Create(Tile.TileType.Gold);
-                
             }
             UpdateVision();
         }
@@ -73,10 +72,10 @@ namespace WFA_POE
 
         public int MapWidth { get { return mapWidth; } }
         public int MapHeight { get { return mapHeight; } }
-        public Tile[,] GameMap { get { return map; } set { GameMap = value; } } 
+        public Tile[,] GameMap { get { return map; } set { map = value; } } 
         public Hero GameHero { get { return hero; } set { hero = value; } }
         public Enemy[] GameEnemies { get { return enemies; } set { enemies = value; } }
-        public Item[] Items { get { return items; } set { items = value; } }
+        public Item?[] Items { get { return items; } set { items = value; } }
 
         #endregion
 
@@ -106,9 +105,11 @@ namespace WFA_POE
         {
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i] is null) continue;
-                
-                if (items[i].X == x && items[i].Y == y)
+                if (items[i] is null)
+                {
+                    continue;
+                }
+                else if (items[i].X == x && items[i].Y == y)
                 {
                     Item? item = items[i];
                     items[i] = null;
@@ -125,16 +126,16 @@ namespace WFA_POE
             int rndmY;
             do
             {
-                rndmY = random.Next(2, mapWidth - 2);
-                rndmX = random.Next(2, mapHeight - 2);
+                rndmY = random.Next(1, mapWidth - 1);
+                rndmX = random.Next(1, mapHeight - 1);
 
-                if (map[rndmY, rndmX] == null)
+                if (map[rndmY, rndmX] is null)
                 {
                     loop = false;
                 }
                 else
                 {
-                    loop = (map[rndmY, rndmX].Type != Tile.TileType.EmptyTile);
+                    loop = (map[rndmY, rndmX] is not EmptyTile);
                 }
 
             } while (loop);
@@ -142,16 +143,14 @@ namespace WFA_POE
             switch (type)
             {
                 case Tile.TileType.Hero:
-                    Hero tmp = new Hero(rndmX, rndmY, 99, 99);
-                    map[rndmY, rndmX] = tmp;
-                    map[rndmY, rndmX].Type = Tile.TileType.Hero;
-                    return tmp;
+                    Hero hero = new Hero(rndmX, rndmY, 99, 99);
+                    map[rndmY, rndmX] = hero;
+                    return hero;
                 case Tile.TileType.Enemy:
                     if (random.Next(2) == 0)
                     {
                         SwampCreature swampCreature = new SwampCreature(rndmX, rndmY);
                         map[rndmY, rndmX] = swampCreature;
-                        map[rndmY, rndmX].Type = Tile.TileType.Enemy;
                         AddEnemy(swampCreature);
                         return swampCreature;
                     }
@@ -159,20 +158,17 @@ namespace WFA_POE
                     {
                         Mage mage = new Mage(rndmX, rndmY);
                         map[rndmY, rndmX] = mage;
-                        map[rndmY, rndmX].Type = Tile.TileType.Enemy;
                         AddEnemy(mage);
                         return mage;
                     }
                 case Tile.TileType.Gold:
                     Gold gold = new Gold(rndmX, rndmY);
                     map[rndmY, rndmX] = gold;
-                    map[rndmY, rndmX].Type = Tile.TileType.Gold;
                     AddItem(gold);
                     return gold;
                 default:
                     EmptyTile empty = new EmptyTile(rndmX, rndmY);
                     map[rndmY, rndmX] = empty;
-                    map[rndmY, rndmX].Type = Tile.TileType.EmptyTile;
                     return empty;
 
             }
