@@ -16,7 +16,7 @@ namespace WFA_POE
         public GameEngine()
         {
             gameMap = new Map(10, 13, 15, 17, 5, 5, 5);
-            shop = new Shop();
+            shop = new Shop(gameMap.GameHero);
         }
 
         #region Properties

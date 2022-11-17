@@ -32,8 +32,10 @@ namespace WFA_POE
         {
             if (ComboBox_Enemies.SelectedIndex == -1) return;
             if (engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex].IsDead()) return;//Checking if the enemy is dead before attacking
+
             bool success = engine.GameMap.GameHero.CheckRange(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
             engine.GameMap.GameHero.Attack(engine.GameMap.GameEnemies[ComboBox_Enemies.SelectedIndex]);
+
             if (success) UpdateSelectedEnemyStats();
             else Re_Enemy_Stats.Text = "Attack Unsucessful";
             
@@ -65,10 +67,7 @@ namespace WFA_POE
             UpdateSelectedEnemyStats();
         }
         
-        private void GameForm_Load(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         private void LblStart_Click(object sender, EventArgs e)
         {
@@ -147,11 +146,10 @@ namespace WFA_POE
             engine.MovePlayer(movement);
             engine.MoveEnemies();
             engine.EnemiesAttack();
-            DispPlayerStats();
 
+            DispPlayerStats();
             UpdateEnemyComboBox();
             UpdateVision();
-
             UpdateMap();
         }
         #endregion
@@ -165,12 +163,38 @@ namespace WFA_POE
         #region Shop
         private void shopComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            buyBtn.Enabled = (engine.GameShop.CanBuy(shopComboBox.SelectedIndex));
         }
 
         private void buyBtn_Click(object sender, EventArgs e)
         {
+            engine.GameShop.Buy(shopComboBox.SelectedIndex);
 
+            UpdateShop();
+            UpdateMap();
+            DispPlayerStats();
+        }
+
+        private void UpdateShop()
+        {
+            shopTextBox.Text = "";
+            shopComboBox.Items.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                shopTextBox.Text += "• " + engine.GameShop.DisplayWeapon(i);
+                shopTextBox.Text += Environment.NewLine;
+
+                shopComboBox.Items.Add(engine.GameShop.DisplayWeapon(i));
+            }
+        }
+
+        private void GameForm_Load(object sender, EventArgs e)
+        {
+            DispPlayerStats();
+            UpdateEnemyComboBox();
+            UpdateVision();
+            UpdateMap();
+            UpdateShop();
         }
         #endregion
     }

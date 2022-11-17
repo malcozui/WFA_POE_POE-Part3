@@ -8,7 +8,7 @@ namespace WFA_POE
 		private Random rndm;
 		private Character buyer;
 
-		public Shop()
+		public Shop(Character buyer)
 		{
             this.buyer = buyer;
 
