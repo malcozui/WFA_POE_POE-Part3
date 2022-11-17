@@ -1,59 +1,39 @@
 ﻿using System;
 
-public class MeleeClass
+namespace WFA_POE
 {
-	public MeleeClass()
-	{
-		enum MeleeWeapons
-		{
-		Dagger,
-		
-		longsword
+    public class MeleeWeapon : Weapon
+    {
+
+        public enum Type
+        {
+            Longsword,
+            Dagger
+        }
 
 
-		class MeleeWeapons : BaseClass
-		{
-		public override string MeleeWeapons { get; set; }
-		}
+        public MeleeWeapon(Type weaponType, int x = -1, int y = -1) : base(x, y)
+        {
+            switch (weaponType)
+            {
+                case Type.Longsword:
+                    this.weaponType = "Longsword";
+                    durability = 6;
+                    dmg = 4;
+                    cost = 3;
+                    break;
+                case Type.Dagger:
+                    this.weaponType = "Dagger";
+                    durability = 10;
+                    dmg = 3;
+                    cost = 3;
+                    break;
+            }
+        }
 
-		public int Dagger
-		{
-		int durability;
-		 durability = 10;
-
-		int damage
-		damage= 3;
-
-		int cost;
-		cost = 3;
-		}
-		public int longsword;
-		{
-		int durability;
-		durability = 6;
-
-		int damage
-			damage = 4;
-
-		int cost;
-		cost = 5;
-		}
-	
-
-		class MeleeWeapons
-		{
-		
-			public random enum MeleeWeapon { Dagger, longsword };
-			int x;
-			int y;
-
-			{
-					public MeleeWeapon(int x) {int x }
-			}
-		}
-		
-		}
-
-	}
-
+        public override string ToString()
+        {
+            return weaponType;
+        }
+    }
 }
