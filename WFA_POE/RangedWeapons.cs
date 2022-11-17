@@ -30,6 +30,26 @@ namespace WFA_POE
                     break;
             }
         }
+        public RangedWeapon(Type weaponType, int durability) : base(-1, -1)
+        {
+            switch (weaponType)
+            {
+                case Type.Longbow:
+                    this.weaponType = "Longbow";
+                    this.durability = durability;
+                    range = 2;
+                    dmg = 4;
+                    cost = 6;
+                    break;
+                case Type.Rifle:
+                    this.weaponType = "Rifle";
+                    this.durability = durability;
+                    range = 3;
+                    dmg = 5;
+                    cost = 7;
+                    break;
+            }
+        }
 
         public override int Range { get => base.Range; }
         public override string ToString()

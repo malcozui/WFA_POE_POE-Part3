@@ -279,7 +279,7 @@ namespace WFA_POE
             charactersTable.Columns.Add(new DataColumn("GoldAmount", typeof(int)));
             charactersTable.Columns.Add(new DataColumn("Weapon", typeof(string)));
             charactersTable.Columns.Add(new DataColumn("WeaponDurability", typeof(int)));
-            charactersTable.Columns.Add(new DataColumn("Dead", typeof(bool)));
+            charactersTable.Columns.Add(new DataColumn("IsDead", typeof(bool)));
 
 
             //gold table
@@ -301,21 +301,21 @@ namespace WFA_POE
             mapCreationTable.Rows.Add(gameMap.MapWidth, gameMap.MapHeight, gameMap.GameEnemies.Length, 4, 2);
 
             //characters table
-            if (gameMap.GameHero.WeaponUsed is not null) charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, gameMap.GameHero.WeaponUsed.WeaponType, gameMap.GameHero.IsDead());
-            else charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, "BareHands", gameMap.GameHero.IsDead());
+            if (gameMap.GameHero.WeaponUsed is not null) charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, gameMap.GameHero.WeaponUsed.WeaponType, gameMap.GameHero.WeaponUsed.Durability, gameMap.GameHero.IsDead());
+            else charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, "BareHands", -1, gameMap.GameHero.IsDead());
 
             for (int i = 0; i < gameMap.GameEnemies.Length; i++)
             {
                 switch (gameMap.GameEnemies[i])
                 {
                     case SwampCreature:
-                        charactersTable.Rows.Add("SwampCreature", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].IsDead());
+                        charactersTable.Rows.Add("SwampCreature", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].WeaponUsed.Durability, gameMap.GameEnemies[i].IsDead());
                         break;
                     case Mage:
-                        charactersTable.Rows.Add("Mage", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, "BareHands", gameMap.GameEnemies[i].IsDead());
+                        charactersTable.Rows.Add("Mage", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, "BareHands", -1, gameMap.GameEnemies[i].IsDead());
                         break;
                     case Leader:
-                        charactersTable.Rows.Add("Leader", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].IsDead());
+                        charactersTable.Rows.Add("Leader", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].WeaponUsed.Durability, gameMap.GameEnemies[i].IsDead());
                         break;
                     default:
                         break;
@@ -374,21 +374,23 @@ namespace WFA_POE
                 string type_CH;
                 int x_CH, y_CH, hp_CH, goldPurse_CH;
                 string weapon_CH;
+                int weaponDura_CH;
                 bool dead_CH;
 
                 type_CH = (string)row["CharacterType"];
                 x_CH = Convert.ToInt32(row["Xposition"]);
                 y_CH = Convert.ToInt32(row["Yposition"]);
                 hp_CH = Convert.ToInt32(row["HP"]);
-                goldPurse_CH = Convert.ToInt32(row["GoldPurse"]);
+                goldPurse_CH = Convert.ToInt32(row["GoldAmount"]);
                 weapon_CH = (string)row["Weapon"];
-                dead_CH = Convert.ToBoolean(row["Dead"]);
+                weaponDura_CH = Convert.ToInt32(row["WeaponDurability"]);
+                dead_CH = Convert.ToBoolean(row["IsDead"]);
                 Weapon? w = weapon_CH switch
                 {
-                    "Rifle" => new RangedWeapon(RangedWeapon.Type.Rifle),
-                    "Longbow" => new RangedWeapon(RangedWeapon.Type.Longbow),
-                    "Dagger" => new MeleeWeapon(MeleeWeapon.Type.Dagger),
-                    "Longsword" => new MeleeWeapon(MeleeWeapon.Type.Longsword),
+                    "Rifle" => new RangedWeapon(RangedWeapon.Type.Rifle, weaponDura_CH),
+                    "Longbow" => new RangedWeapon(RangedWeapon.Type.Longbow, weaponDura_CH),
+                    "Dagger" => new MeleeWeapon(MeleeWeapon.Type.Dagger, weaponDura_CH),
+                    "Longsword" => new MeleeWeapon(MeleeWeapon.Type.Longsword, weaponDura_CH),
                     _ => null
                 };
 
