@@ -1,23 +1,23 @@
 ﻿using System;
 
-public class Class1
+public class MeleeClass
 {
-	public Class1()
+	public MeleeClass()
 	{
 		enum MeleeWeapons
-	{
+		{
 		Dagger,
 		
 		longsword
 
 
 		class MeleeWeapons : BaseClass
-	{
+		{
 		public override string MeleeWeapons { get; set; }
-	}
+		}
 
-	public int Dagger
-    {
+		public int Dagger
+		{
 		int durability;
 		 durability = 10;
 
@@ -26,31 +26,31 @@ public class Class1
 
 		int cost;
 		cost = 3;
-	}
-	public int longsword;
-	{
-	int durability;
-	durability = 6;
+		}
+		public int longsword;
+		{
+		int durability;
+		durability = 6;
 
-	int damage
-		damage = 4;
+		int damage
+			damage = 4;
 
-	int cost;
-	cost = 5;
-}
+		int cost;
+		cost = 5;
+		}
 	
 
-	class MeleeWeapons
-				{
+		class MeleeWeapons
+		{
 		
-				public random enum MeleeWeapon { Dagger, longsword };
-				int x;
-				int y;
+			public random enum MeleeWeapon { Dagger, longsword };
+			int x;
+			int y;
 
-				{
-					 public MeleeWeapon(int x) {int x }
-				}
+			{
+					public MeleeWeapon(int x) {int x }
 			}
+		}
 		
 		}
 

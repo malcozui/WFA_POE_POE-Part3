@@ -1,22 +1,25 @@
 ﻿using System;
 
-public class Class1
+namespace WFA_POE
 {
-	// SAYING WHAT WEAPONS THEY ARE AND AS WELL THAT THEY SHOULD BE PICKED RANDOMLY
-	public weapons()
+	public class Shop
 	{
-		string[] weapons = { "longbow", "Dagger", "longword"};
+		// SAYING WHAT WEAPONS THEY ARE AND AS WELL THAT THEY SHOULD BE PICKED RANDOMLY
+		public Shop()
+		{
+			string[] weapons = { "longbow", "Dagger", "longword"};
 
-		random Weapons = new Weapons();
+		
 
 
+		}
+		private class Shop
+		{
+			random random = new random;
+
+			return Dagger;
+			return longsword;
+			return Rifle
+		}
 	}
-	private class weapon
-    {
-		random random = new random;
-
-		return Dagger;
-		return longsword;
-		return Rifle
-    }
 }
