@@ -19,11 +19,15 @@ namespace WFA_POE
         #region Save&&Load
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            
+            engine.Save();
         }
         private void loadBtn_Click(object sender, EventArgs e)
         {
-            
+            engine.Load();
+            UpdateMap();
+            DispPlayerStats();
+            UpdateEnemyComboBox();
+            UpdateShop();
         }
         #endregion
 
@@ -144,13 +148,16 @@ namespace WFA_POE
 
         private void DirectionHandler(Character.Movement movement)
         {
+            //updating vision between turns so that everyone knows where everyone else is at all times.
             engine.MovePlayer(movement);
+            UpdateVision();
             engine.MoveEnemies();
+            UpdateVision();
             engine.EnemiesAttack();
+            UpdateVision();
 
             DispPlayerStats();
             UpdateEnemyComboBox();
-            UpdateVision();
             UpdateMap();
         }
         #endregion

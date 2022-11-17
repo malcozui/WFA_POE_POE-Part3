@@ -12,7 +12,7 @@ namespace WFA_POE
         public SwampCreature(int x, int y, int hp = 10) : base(x, y, hp, 10, 1)
         {
             weapon = new MeleeWeapon(MeleeWeapon.Type.Dagger);
-            this.hp = hp;
+            goldAmount = 1;
         }
 
         public override Movement ReturnMove(Movement move = Movement.NoMovement) // Check movemnet

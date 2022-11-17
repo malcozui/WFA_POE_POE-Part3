@@ -10,7 +10,8 @@ namespace WFA_POE
     {
         public Mage(int x, int y, int hp = 5) : base(x, y, hp, 5, 5)
         {
-            this.hp = hp;
+            goldAmount = 3;
+            
         }
 
         public override Movement ReturnMove(Movement move = Movement.NoMovement) // Check movemnet

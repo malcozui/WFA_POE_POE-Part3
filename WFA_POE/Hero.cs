@@ -27,7 +27,7 @@ namespace WFA_POE
             }
             else
             {
-                return $"Player Stats: {Environment.NewLine}HP:{hp}/{maxHp} {Environment.NewLine}Current weapon: {weapon.WeaponType} {Environment.NewLine}Weapon range: {weapon.Range} {Environment.NewLine}Weapon damage: {weapon.Dmg} {Environment.NewLine}[{x}, {y}]{Environment.NewLine}Gold Amount: {goldAmount}";
+                return $"Player Stats: {Environment.NewLine}HP:{hp}/{maxHp} {Environment.NewLine}Current weapon: {weapon.WeaponType} {Environment.NewLine}Weapon range: {weapon.Range} {Environment.NewLine}Weapon damage: {weapon.Dmg} {Environment.NewLine}Weapon Durability: {weapon.Durability} {Environment.NewLine}[{x}, {y}]{Environment.NewLine}Gold Amount: {goldAmount}";
 
             }
         }

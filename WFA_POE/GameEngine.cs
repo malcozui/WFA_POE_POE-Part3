@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,11 @@ namespace WFA_POE
         #endregion
 
         #region Methods 
-
+        /// <summary>
+        /// Moves the player if they can move that direction, also picks up any items infront of them.
+        /// </summary>
+        /// <param name="direction">The direction the player is moved in.</param>
+        /// <returns>A boolean value representing whether the player sucessfully moved.</returns>
         public bool MovePlayer(Character.Movement direction)  // Player movement
         {
             //checks if the move is valid
@@ -66,8 +71,8 @@ namespace WFA_POE
                 }
                 //Moves the player in the requested direction
                 gameMap.GameHero.Move(direction);
+                gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X] = gameMap.GameHero;
                 
-                gameMap.GameMap[gameMap.GameHero.Y, gameMap.GameHero.X] = new Hero(gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.MaxHp);
                 switch (direction)
                 {
                     //makes the tile the player was in empty after they leave.
@@ -95,6 +100,10 @@ namespace WFA_POE
 
         }
 
+        /// <summary>
+        /// Moves all the enemies in the direction they're going to move.
+        /// </summary>
+        /// <param name="direction">Unused. Here since the POE had it.</param>
         public void MoveEnemies(Character.Movement direction = Character.Movement.NoMovement)
         {
             for (int i = 0; i < gameMap.GameEnemies.Length; i++)
@@ -242,6 +251,297 @@ namespace WFA_POE
                 sb.AppendLine();
             }
             return sb.ToString();
+        }
+
+        public void Save()
+        {
+            //saving all the data into XML tables
+            DataSet dataSet = new DataSet();
+            DataTable mapCreationTable = new DataTable();
+            DataTable charactersTable = new DataTable();
+            DataTable goldTable = new DataTable();
+            DataTable weaponsTable = new DataTable();
+
+            //map creation table
+            dataSet.Tables.Add(mapCreationTable);
+            mapCreationTable.Columns.Add(new DataColumn("Width", typeof(int)));
+            mapCreationTable.Columns.Add(new DataColumn("Height", typeof(int)));
+            mapCreationTable.Columns.Add(new DataColumn("EnemyCount", typeof(int)));
+            mapCreationTable.Columns.Add(new DataColumn("GoldCount", typeof(int)));
+            mapCreationTable.Columns.Add(new DataColumn("WeaponCount", typeof(int)));
+
+            //characters table
+            dataSet.Tables.Add(charactersTable);
+            charactersTable.Columns.Add(new DataColumn("CharacterType", typeof(string)));
+            charactersTable.Columns.Add(new DataColumn("Xposition", typeof(int)));
+            charactersTable.Columns.Add(new DataColumn("Yposition", typeof(int)));
+            charactersTable.Columns.Add(new DataColumn("HP", typeof(int)));
+            charactersTable.Columns.Add(new DataColumn("GoldAmount", typeof(int)));
+            charactersTable.Columns.Add(new DataColumn("Weapon", typeof(string)));
+            charactersTable.Columns.Add(new DataColumn("WeaponDurability", typeof(int)));
+            charactersTable.Columns.Add(new DataColumn("Dead", typeof(bool)));
+
+
+            //gold table
+            dataSet.Tables.Add(goldTable);
+            goldTable.Columns.Add(new DataColumn("Xposition", typeof(int)));
+            goldTable.Columns.Add(new DataColumn("Yposition", typeof(int)));
+            goldTable.Columns.Add(new DataColumn("GoldCount", typeof(int)));
+
+            //weapons table for in map weapons
+            dataSet.Tables.Add(weaponsTable);
+            weaponsTable.Columns.Add(new DataColumn("Type", typeof(string)));
+            weaponsTable.Columns.Add(new DataColumn("Xposition", typeof(int)));
+            weaponsTable.Columns.Add(new DataColumn("Yposition", typeof(int)));
+            weaponsTable.Columns.Add(new DataColumn("durability", typeof(int)));
+
+
+            //writing data into tables
+            //map creation table
+            mapCreationTable.Rows.Add(gameMap.MapWidth, gameMap.MapHeight, gameMap.GameEnemies.Length, 4, 2);
+
+            //characters table
+            if (gameMap.GameHero.WeaponUsed is not null) charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, gameMap.GameHero.WeaponUsed.WeaponType, gameMap.GameHero.IsDead());
+            else charactersTable.Rows.Add("Hero", gameMap.GameHero.X, gameMap.GameHero.Y, gameMap.GameHero.Hp, gameMap.GameHero.GoldAmount, "BareHands", gameMap.GameHero.IsDead());
+
+            for (int i = 0; i < gameMap.GameEnemies.Length; i++)
+            {
+                switch (gameMap.GameEnemies[i])
+                {
+                    case SwampCreature:
+                        charactersTable.Rows.Add("SwampCreature", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].IsDead());
+                        break;
+                    case Mage:
+                        charactersTable.Rows.Add("Mage", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, "BareHands", gameMap.GameEnemies[i].IsDead());
+                        break;
+                    case Leader:
+                        charactersTable.Rows.Add("Leader", gameMap.GameEnemies[i].X, gameMap.GameEnemies[i].Y, gameMap.GameEnemies[i].Hp, gameMap.GameEnemies[i].GoldAmount, gameMap.GameEnemies[i].WeaponUsed.WeaponType, gameMap.GameEnemies[i].IsDead());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //gold and weapons table
+            for (int i = 0; i < gameMap.Items.Length; i++)
+            {
+                switch (gameMap.Items[i])
+                {
+                    case Gold gold:
+                        goldTable.Rows.Add(gold.X, gold.Y, gold.GoldAmount);
+                        break;
+                    case MeleeWeapon melee:
+                        weaponsTable.Rows.Add(melee.WeaponType, melee.X, melee.Y, melee.Durability);
+                        break;
+                    case RangedWeapon ranged:
+                        weaponsTable.Rows.Add(ranged.WeaponType, ranged.X, ranged.Y, ranged.Durability);
+                        break;
+                }
+            }
+
+            dataSet.WriteXml("Tables.xml");
+        }
+
+        public void Load()
+        {
+            DataSet loadingData = new DataSet();
+            loadingData.ReadXml("Tables.xml");
+
+            //Map Creation
+            int width_MC, height_MC, enemies_MC, gold_MC, weapons_MC;
+            width_MC = Convert.ToInt32(loadingData.Tables[0].Rows[0]["Width"]);
+            height_MC = Convert.ToInt32(loadingData.Tables[0].Rows[0]["Height"]);
+            enemies_MC = Convert.ToInt32(loadingData.Tables[0].Rows[0]["EnemyCount"]);
+            gold_MC = Convert.ToInt32(loadingData.Tables[0].Rows[0]["GoldCount"]);
+            weapons_MC = Convert.ToInt32(loadingData.Tables[0].Rows[0]["WeaponCount"]);
+
+            gameMap = new Map(width_MC, width_MC, height_MC, height_MC, enemies_MC, gold_MC, weapons_MC);
+
+            //emptying the map of its auto-generated content
+            for (int i = 1; i < height_MC - 1; i++)
+            {
+                for (int j = 1; j < width_MC - 1; j++)
+                {
+                    gameMap.GameMap[i, j] = new EmptyTile(j, i);
+                }
+            }
+            gameMap.GameEnemies = new Enemy[enemies_MC];
+            gameMap.Items = new Item[gold_MC + weapons_MC];
+
+            //Characters
+            foreach (DataRow row in loadingData.Tables[1].Rows) //Characters Table
+            {
+                string type_CH;
+                int x_CH, y_CH, hp_CH, goldPurse_CH;
+                string weapon_CH;
+                bool dead_CH;
+
+                type_CH = (string)row["CharacterType"];
+                x_CH = Convert.ToInt32(row["Xposition"]);
+                y_CH = Convert.ToInt32(row["Yposition"]);
+                hp_CH = Convert.ToInt32(row["HP"]);
+                goldPurse_CH = Convert.ToInt32(row["GoldPurse"]);
+                weapon_CH = (string)row["Weapon"];
+                dead_CH = Convert.ToBoolean(row["Dead"]);
+                Weapon? w = weapon_CH switch
+                {
+                    "Rifle" => new RangedWeapon(RangedWeapon.Type.Rifle),
+                    "Longbow" => new RangedWeapon(RangedWeapon.Type.Longbow),
+                    "Dagger" => new MeleeWeapon(MeleeWeapon.Type.Dagger),
+                    "Longsword" => new MeleeWeapon(MeleeWeapon.Type.Longsword),
+                    _ => null
+                };
+
+                switch (type_CH)
+                {
+                    case "Hero":
+                        Hero hero = new Hero(x_CH, y_CH, hp_CH, hp_CH) { GoldAmount = goldPurse_CH };
+                        if (w is not null) hero.Pickup(w);
+                        gameMap.GameHero = hero;
+                        gameMap.GameMap[y_CH, x_CH] = hero;
+                        break;
+                    case "SwampCreature":
+                        SwampCreature sc = new SwampCreature(x_CH, y_CH, hp_CH) { GoldAmount = goldPurse_CH };
+                        if (w is not null) sc.Pickup(w);
+                        for (int i = 0; i < gameMap.GameEnemies.Length; i++)
+                        {
+                            if (gameMap.GameEnemies[i] is null)
+                            {
+                                gameMap.GameEnemies[i] = sc;
+                                break;
+                            }
+                        }
+                        if (!dead_CH)
+                        {
+                            gameMap.GameMap[y_CH, x_CH] = sc;
+                        }
+                        break;
+                    case "Mage":
+                        Mage mage = new Mage(x_CH, y_CH, hp_CH) { GoldAmount = goldPurse_CH };
+                        if (w is not null) mage.Pickup(w);
+                        for (int i = 0; i < gameMap.GameEnemies.Length; i++)
+                        {
+                            if (gameMap.GameEnemies[i] is null)
+                            {
+                                gameMap.GameEnemies[i] = mage;
+                                break;
+                            }
+                        }
+                        if (!dead_CH)
+                        {
+                            gameMap.GameMap[y_CH, x_CH] = mage;
+                        }
+                        break;
+                    case "Leader":
+                        Leader leader = new Leader(x_CH, y_CH, hp_CH) { GoldAmount = goldPurse_CH, Target = gameMap.GameHero };
+                        if (w is not null) leader.Pickup(w);
+                        for (int i = 0; i < gameMap.GameEnemies.Length; i++)
+                        {
+                            if (gameMap.GameEnemies[i] is null)
+                            {
+                                gameMap.GameEnemies[i] = leader;
+                                break;
+                            }
+                        }
+                        if (!dead_CH)
+                        {
+                            gameMap.GameMap[y_CH, x_CH] = leader;
+                        }
+                        break;
+
+                }
+            }
+
+            //gold
+            foreach (DataRow row in loadingData.Tables[2].Rows) //gold table
+            {
+                int x_GO, y_GO, gold_GO;
+
+                x_GO = Convert.ToInt32(row["Xposition"]);
+                y_GO = Convert.ToInt32(row["Yposition"]);
+                gold_GO = Convert.ToInt32(row["GoldCount"]);
+
+
+                Gold gold = new Gold(x_GO, y_GO) { GoldAmount = gold_GO };
+                for (int i = 0; i < gameMap.Items.Length; i++)
+                {
+                    if (gameMap.Items[i] is null)
+                    {
+                        gameMap.Items[i] = gold;
+                        break;
+                    }
+                }
+                gameMap.GameMap[y_GO, x_GO] = gold;
+            }
+
+            //weapons on gameMap
+            foreach (DataRow row in loadingData.Tables[3].Rows) //weapons table
+            {
+                string type;
+                int x_W, y_W, durability_W;
+
+                type = (string)row["Type"];
+                x_W = Convert.ToInt32(row["Xposition"]);
+                y_W = Convert.ToInt32(row["Yposition"]);
+                durability_W = Convert.ToInt32(row["durability"]);
+
+                if (x_W == 0 || y_W == 0)
+                {
+                    continue;
+                }
+                switch (type)
+                {
+                    case "Rifle":
+                        RangedWeapon rifle = new RangedWeapon(RangedWeapon.Type.Rifle, x_W, y_W) { Durability = durability_W };
+                        for (int i = 0; i < gameMap.Items.Length; i++)
+                        {
+                            if (gameMap.Items[i] is null)
+                            {
+                                gameMap.Items[i] = rifle;
+                                break;
+                            }
+                        }
+                        gameMap.GameMap[y_W, x_W] = rifle;
+                        break;
+                    case "LongBow":
+                        RangedWeapon longbow = new RangedWeapon(RangedWeapon.Type.Longbow, x_W, y_W) { Durability = durability_W };
+                        for (int i = 0; i < gameMap.Items.Length; i++)
+                        {
+                            if (gameMap.Items[i] is null)
+                            {
+                                gameMap.Items[i] = longbow;
+                                break;
+                            }
+                        }
+                        gameMap.GameMap[y_W, x_W] = longbow;
+                        break;
+                    case "Dagger":
+                        MeleeWeapon dagger = new MeleeWeapon(MeleeWeapon.Type.Dagger, x_W, y_W) { Durability = durability_W };
+                        for (int i = 0; i < gameMap.Items.Length; i++)
+                        {
+                            if (gameMap.Items[i] is null)
+                            {
+                                gameMap.Items[i] = dagger;
+                                break;
+                            }
+                        }
+                        gameMap.GameMap[y_W, x_W] = dagger;
+                        break;
+                    case "Longsword":
+                        MeleeWeapon longsword = new MeleeWeapon(MeleeWeapon.Type.Longsword, x_W, y_W) { Durability = durability_W };
+                        for (int i = 0; i < gameMap.Items.Length; i++)
+                        {
+                            if (gameMap.Items[i] is null)
+                            {
+                                gameMap.Items[i] = longsword;
+                                break;
+                            }
+                        }
+                        gameMap.GameMap[y_W, x_W] = longsword;
+                        break;
+                }
+            }
+            gameMap.UpdateVision();
         }
 
         #endregion
