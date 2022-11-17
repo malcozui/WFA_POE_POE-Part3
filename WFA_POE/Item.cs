@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WFA_POE
 {
-    abstract class Item : Tile 
+    public abstract class Item : Tile 
     {
         public Item(int x, int y) : base(x, y)
         {
