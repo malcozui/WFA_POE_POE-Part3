@@ -13,6 +13,7 @@ namespace WFA_POE
         protected int damage;
         protected int goldAmount;
         protected Tile[] charactermovement = new Tile[4];
+        protected Weapon? weapon;
         public enum Movement  // Player movement
         {
             Up,
@@ -37,6 +38,7 @@ namespace WFA_POE
         public int Damage { get { return damage; } set { damage = value; } }
         public int GoldAmount { get { return goldAmount; } set { goldAmount = value; } }
         public Tile[] Charactermovement { get { return charactermovement; } set { charactermovement = value; } }
+        public Weapon WeaponUsed { get { return weapon; } set { weapon = value; } }
 
         #endregion
 
@@ -47,7 +49,18 @@ namespace WFA_POE
             //returns from the attack if the attacker is too far to attack successfully
             if (!CheckRange(target)) return;
             //damages the target by the attackers damage value.
-            target.hp -= this.damage;
+            if (weapon is null) target.hp -= this.damage;
+            else
+            {
+                target.hp -= weapon.Dmg;
+                //using durability of weapons
+                weapon.Durability -= 1;
+                if (weapon.Durability <= 0)
+                {
+                    weapon = null;
+                }
+            }
+
         }
 
         public bool IsDead()
@@ -58,8 +71,9 @@ namespace WFA_POE
 
         public virtual bool CheckRange(Character target)
         {
+            if (weapon is null) return (DistanceTo(target) <= 1);
+            else return (DistanceTo(target) <= weapon.Range);
 
-            return !(DistanceTo(target) > 1);
 
         }
 
@@ -101,8 +115,14 @@ namespace WFA_POE
                     goldAmount += tmp.GoldAmount;
                     break;
                 default:
+                    Equip((Weapon)i);
                     break;
             }
+        }
+
+        private void Equip(Weapon w)
+        {
+            weapon = w;
         }
 
         public abstract Movement ReturnMove(Movement move = 0);
