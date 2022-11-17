@@ -5,8 +5,8 @@ namespace WFA_POE
     // Tile is the base class for all in-game objects that have positions on the map.
     public abstract class Tile  
     {
-        private int x;
-        private int y;
+        protected int x;
+        protected int y;
         
         public enum TileType // Tile type that the map is made out of
         {
