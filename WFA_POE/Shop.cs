@@ -8,18 +8,17 @@ namespace WFA_POE
 		private Random rndm;
 		private Character buyer;
 
-		public Shop(Character buyer)
+		public Shop()
 		{
-			this.buyer = buyer;
+            this.buyer = buyer;
 
-			rndm= new Random();
-			weapons = new Weapon[3];
-			for (int i = 0; i < weapons.Length; i++)
-			{
-				weapons[i] = RandomWeapon();
-			}
-
-		}
+            rndm = new Random();
+            weapons = new Weapon[3];
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i] = RandomWeapon();
+            }
+        }
 		
 		private Weapon RandomWeapon()
 		{

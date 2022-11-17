@@ -9,6 +9,7 @@ namespace WFA_POE
     internal class GameEngine
     {
         private Map gameMap;
+        private Shop shop;
         //Map TileType icons
         private static readonly string HERO = "ඞ", EMPTY = "░", SWAMP_CREATURE = "👾", OBSTACLE = "◙", GOLD = "©" , MAGE = "🧙‍"; 
 
@@ -20,7 +21,8 @@ namespace WFA_POE
 
         #region Properties
         
-        public Map GameMap { get { return gameMap; } }
+        public Map GameMap { get => gameMap; }
+        public Shop GameShop { get => shop; }
 
         #endregion
 

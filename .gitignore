@@ -381,3 +381,5 @@ FodyWeavers.xsd
 /WFA_POE/obj/Debug/net6.0-windows/WFA_POE.csproj.GenerateResource.cache
 /WFA_POE/obj/Debug/net6.0-windows/WFA_POE.pdb
 /WFA_POE/obj/Debug/net6.0-windows/WFA_POE.dll
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.designer.runtimeconfig.json
+/WFA_POE/obj/Debug/net6.0-windows/WFA_POE.genruntimeconfig.cache

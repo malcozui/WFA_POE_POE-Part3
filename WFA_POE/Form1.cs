@@ -157,5 +157,16 @@ namespace WFA_POE
 
         #endregion
 
+        #region Shop
+        private void shopComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buyBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
     }
 }
