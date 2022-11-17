@@ -16,7 +16,7 @@ namespace WFA_POE
         public override Movement ReturnMove(Movement move)
         {
             if (move == Movement.NoMovement) return move;
-            return (Charactermovement[(int)move] is EmptyTile or Gold) ? move : Movement.NoMovement;
+            return (Charactermovement[(int)move] is EmptyTile or Item) ? move : Movement.NoMovement;
         }
 
         public override string ToString() // Display hero stats

@@ -11,7 +11,7 @@ namespace WFA_POE
         private Map gameMap;
         private Shop shop;
         //Map TileType icons
-        private static readonly string HERO = "ඞ", EMPTY = "░", SWAMP_CREATURE = "👾", OBSTACLE = "◙", GOLD = "©" , MAGE = "🧙‍"; 
+        private static readonly string HERO = "ඞ", EMPTY = "░", SWAMP_CREATURE = "👾", OBSTACLE = "◙", GOLD = "©" , MAGE = "🧙‍", LEADER = "🦹", DAGGER = "🗡", LONGSWORD = "🔪", LONGBOW = "🏹", RIFLE = "🔫"; 
 
         public GameEngine()
         {
@@ -214,6 +214,17 @@ namespace WFA_POE
                             break;
                         case Mage:
                             sb.Append(MAGE);
+                            break;
+                        case Leader:
+                            sb.Append(LEADER);
+                            break;
+                        case RangedWeapon rw:
+                            if (rw.WeaponType == "Rifle") sb.Append(RIFLE);
+                            else sb.Append(LONGBOW);
+                            break;
+                        case MeleeWeapon mw:
+                            if (mw.WeaponType == "Dagger") sb.Append(DAGGER);
+                            else sb.Append(LONGSWORD);
                             break;
                         case Obstacle:
                             sb.Append(OBSTACLE);

@@ -22,7 +22,7 @@ namespace WFA_POE
 
         public override Movement ReturnMove(Movement move = Movement.Up)
         {
-            throw new NotImplementedException();
+            return Movement.NoMovement;
         }
     }
 }

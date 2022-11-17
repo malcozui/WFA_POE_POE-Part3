@@ -13,7 +13,7 @@ namespace WFA_POE
         private Hero hero;
         private Enemy[] enemies;
         private int mapWidth, mapHeight;
-        private Random random = new();
+        private Random rndm = new();
         private Item?[] items;
 
         /// <summary>
@@ -29,10 +29,10 @@ namespace WFA_POE
         public Map(int minMapWidth, int maxMapWidth, int minMapHeight, int maxMapHeight, int enemyCount, int goldCount, int weaponCount)  
         {
             enemies = new Enemy[enemyCount];
-            items = new Item[goldCount];
+            items = new Item[goldCount + weaponCount];
 
-            mapWidth = random.Next(minMapWidth, maxMapWidth);
-            mapHeight = random.Next(minMapHeight, maxMapHeight);
+            mapWidth = rndm.Next(minMapWidth, maxMapWidth);
+            mapHeight = rndm.Next(minMapHeight, maxMapHeight);
             
             map = new Tile[mapWidth, mapHeight];
 
@@ -58,13 +58,19 @@ namespace WFA_POE
             hero.Hp = 99;
             hero.MaxHp = 99;
 
-            for (int i = 0; i < enemies.Length; i++)  
+            CreateLeader();
+            for (int i = 0; i < enemies.Length - 1; i++)  
             {
                 Create(Tile.TileType.Enemy);
             }
-            for (int i = 0; i < items.Length; i++)
+
+            for (int i = 0; i < goldCount; i++)
             {
                 Create(Tile.TileType.Gold);
+            }
+            for (int i = 0; i < weaponCount; i++)
+            {
+                Create(Tile.TileType.Weapon);
             }
             UpdateVision();
         }
@@ -81,6 +87,28 @@ namespace WFA_POE
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Acts like the Create method but for a leader spesifically
+        /// </summary>
+        /// <returns>A leader object</returns>
+        private Leader CreateLeader()
+        {
+            int rndmX, rndmY;
+            bool loop;
+            do
+            {
+                rndmX = rndm.Next(1, mapWidth - 1);
+                rndmY = rndm.Next(1, mapHeight - 1);
+
+                loop = (map[rndmY, rndmX] is not EmptyTile);
+            } while (loop);
+
+            Leader leader = new Leader(rndmX, rndmY);
+            map[rndmY, rndmX] = leader;
+            AddEnemy(leader);
+            return leader;
+        }
 
         /// <summary>
         /// Updates the vision of all enemies and the hero.
@@ -115,11 +143,7 @@ namespace WFA_POE
         {
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i] is null)
-                {
-                    continue;
-                }
-                else if (items[i].X == x && items[i].Y == y)
+                if (items[i] is not null && items[i].X == x && items[i].Y == y)
                 {
                     Item? item = items[i];
                     items[i] = null;
@@ -141,8 +165,8 @@ namespace WFA_POE
             int rndmY;
             do
             {
-                rndmY = random.Next(1, mapWidth - 1);
-                rndmX = random.Next(1, mapHeight - 1);
+                rndmY = rndm.Next(1, mapWidth - 1);
+                rndmX = rndm.Next(1, mapHeight - 1);
 
                 if (map[rndmY, rndmX] is null)
                 {
@@ -162,7 +186,7 @@ namespace WFA_POE
                     map[rndmY, rndmX] = hero;
                     return hero;
                 case Tile.TileType.Enemy:
-                    if (random.Next(2) == 0)
+                    if (rndm.Next(2) == 0)
                     {
                         SwampCreature swampCreature = new SwampCreature(rndmX, rndmY);
                         map[rndmY, rndmX] = swampCreature;
@@ -181,6 +205,20 @@ namespace WFA_POE
                     map[rndmY, rndmX] = gold;
                     AddItem(gold);
                     return gold;
+                case Tile.TileType.Weapon:
+                    Weapon weapon = rndm.Next(4) switch
+                    {
+                        0 => new RangedWeapon(RangedWeapon.Type.Longbow, rndmX, rndmY),
+                        1 => new RangedWeapon(RangedWeapon.Type.Rifle, rndmX, rndmY),
+                        2 => new MeleeWeapon(MeleeWeapon.Type.Dagger, rndmX, rndmY),
+                        3 => new MeleeWeapon(MeleeWeapon.Type.Longsword, rndmX, rndmY),
+                        
+                        //unreachable but here for error prevention.
+                        _ => new MeleeWeapon(MeleeWeapon.Type.Longsword)
+                    };
+                    map[rndmY, rndmX] = weapon;
+                    AddItem(weapon);
+                    return weapon;
                 default:
                     EmptyTile empty = new EmptyTile(rndmX, rndmY);
                     map[rndmY, rndmX] = empty;
